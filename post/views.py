@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.urls.base import reverse
 from post.models import Image, Stream, Tag, Likes
 from post.forms import NewPostForm
+from authy.models import Profile
 from django.template import loader
 
 # Create your views here.
@@ -34,11 +35,21 @@ def index(request):
 @login_required
 def PostDetails(request, post_id):
     post = get_object_or_404(Image, id=post_id)
+    favorited = False
+     
+    #Favorite Color conditionals:
+    if request.user.is_authenticated:
+        profile = Profile.objects.get(user=request.user)
+
+        #For the color of the favorite button
+        if profile.favorites.filter(id=post_id).exists():
+            favorited = True
 
     template = loader.get_template('post_detail.html')
 
     context = {
         'post': post,
+        'favorited': favorited,
     }
 
     return HttpResponse(template.render(context, request))
@@ -110,3 +121,18 @@ def like(request, post_id):
     post.save()
 
     return HttpResponseRedirect(reverse('postdetails', args=[post_id]))
+
+@login_required
+def favorite(request, post_id):
+    user = request.user
+    post = Image.objects.get(id=post_id)
+    profile = Profile.objects.get(user=user)
+
+    if profile.favorites.filter(id=post_id).exists():
+        profile.favorites.remove(post)
+
+    else:
+        profile.favorites.add(post)
+
+    return HttpResponseRedirect(reverse('postdetails', args=[post_id]))
+    
