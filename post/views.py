@@ -1,5 +1,6 @@
+from django import template
 from django.http.response import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
 from post.models import Image, Stream, Tag
 from post.forms import NewPostForm
@@ -29,7 +30,17 @@ def index(request):
 
     return HttpResponse(template.render(context, request))
 
+@login_required
+def PostDetails(request, post_id):
+    post = get_object_or_404(Image, id=post_id)
 
+    template = loader.get_template('post_detail.html')
+
+    context = {
+        'post': post,
+    }
+
+    return HttpResponse(template.render(context, request))
 
 @login_required
 def NewPost(request):
@@ -62,3 +73,4 @@ def NewPost(request):
     }
 
     return render(request, 'newpost.html', context)
+
