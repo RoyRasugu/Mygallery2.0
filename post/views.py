@@ -1,12 +1,17 @@
-from django import template
 from django.http.response import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
 from django.urls.base import reverse
-from post.models import Image, Stream, Tag, Likes
-from post.forms import NewPostForm
-from authy.models import Profile
 from django.template import loader
+
+#Models:
+from comment.models import Comment
+from post.models import Image, Stream, Tag, Likes
+from authy.models import Profile
+
+#Forms:
+from post.forms import NewPostForm
+from comment.forms import CommentForm
 
 # Create your views here.
 @login_required
@@ -35,8 +40,25 @@ def index(request):
 @login_required
 def PostDetails(request, post_id):
     post = get_object_or_404(Image, id=post_id)
+    user = request.user
     favorited = False
-     
+
+    #Comment
+    comments = Comment.objects.filter(post=post).order_by('date')
+
+    #Comments form 
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.user = user
+            comment.save()
+            return HttpResponseRedirect(reverse('postdetails', args=[post_id]))
+
+    else:
+        form = CommentForm()
+        
     #Favorite Color conditionals:
     if request.user.is_authenticated:
         profile = Profile.objects.get(user=request.user)
@@ -50,6 +72,8 @@ def PostDetails(request, post_id):
     context = {
         'post': post,
         'favorited': favorited,
+        'form': form,
+		'comments': comments,
     }
 
     return HttpResponse(template.render(context, request))
