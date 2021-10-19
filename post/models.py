@@ -2,10 +2,12 @@ from django.db import models
 from django.contrib.auth.models import User
 import uuid
 
-# Create your models here.
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, post_delete
 from django.utils.text import slugify
 from django.urls import reverse
+
+from notifications.models import Notification
+# Create your models here.
 
 def user_directory_path(instance, filename):
     # this file will be uploaded to MEDIA_ROOT /user(id)/filename
@@ -33,7 +35,7 @@ class Tag(models.Model):
             self.slug = slugify(self.title)
         return super().save(*args, **kwargs)
 
-class Image(models.Model):
+class Post(models.Model):
     '''
     this is a model class that gives a blueprint on how an image will be created
     '''
@@ -55,13 +57,29 @@ class Follow(models.Model):
     follower = models.ForeignKey(User, on_delete=models.CASCADE, related_name='follower')
     following = models.ForeignKey(User, on_delete=models.CASCADE, related_name='following')
 
+    def user_follow(sender, instance, *args, **kwargs):
+        follow = instance
+        sender = follow.follower
+        following = follow.following
+
+        notify = Notification(sender=sender, user=following, notification_type=3)
+        notify.save()
+
+    def user_unfollow(sender, instance, *args, **kwargs):
+        follow = instance
+        sender = follow.follower
+        following = follow.following
+
+        notify = Notification.objects.filter(sender=sender, user=following, notification_type=3)
+        notify.delete()
+
 class Stream(models.Model):
     '''
     this is a model class that defines the stream model
     '''
     following = models.ForeignKey(User, on_delete=models.CASCADE, related_name='stream_following')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    post = models.ForeignKey(Image, on_delete=models.CASCADE, null=True)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, null=True)
     date = models.DateTimeField()
 
     def add_post(sender, instance, *args, **kwargs):
@@ -77,6 +95,31 @@ class Likes(models.Model):
     this is a model class that defines the likes model
     '''
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_like')
-    post = models.ForeignKey(Image, on_delete=models.CASCADE, related_name='post_likes')
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_likes')
 
-post_save.connect(Stream.add_post, sender=Image)
+    def user_liked_post(sender, instance, *args, **kwargs):
+        like = instance
+        post = like.post
+        sender = like.user
+
+        notify = Notification(post=post, sender=sender, user=post.user, notification_type=1)
+        notify.save()
+
+    def user_unlike_post(sender, instance, *args, **kwargs):
+        like = instance
+        post = like.post
+        sender = like.user
+
+        notify = Notification.objects.filter(post=post, sender=sender, notification_type=1)
+        notify.delete()
+
+#Stream
+post_save.connect(Stream.add_post, sender=Post)
+
+#Likes
+post_save.connect(Likes.user_liked_post, sender=Likes)
+post_delete.connect(Likes.user_unlike_post, sender=Likes)
+
+#Follow
+post_save.connect(Follow.user_follow, sender=Follow)
+post_delete.connect(Follow.user_unfollow, sender=Follow)
