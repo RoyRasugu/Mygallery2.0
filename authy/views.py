@@ -5,7 +5,7 @@ from django.urls.base import reverse
 from authy.forms import SignupForm, EditProfileForm
 from django.contrib.auth.models import User
 
-from post.models import Follow, Image, Stream
+from post.models import Follow, Post, Stream
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
@@ -23,12 +23,12 @@ def UserProfile(request,username):
 	url_name = resolve(request.path).url_name
 
 	if url_name == 'profile':
-		posts = Image.objects.filter(user=user).order_by('-posted')
+		posts = Post.objects.filter(user=user).order_by('-posted')
 	else:
 		posts = profile.favorites.all()
 
 	#Profile info stats
-	posts_count = Image.objects.filter(user=user).count()
+	posts_count = Post.objects.filter(user=user).count()
 	following_count = Follow.objects.filter(follower=user).count()
 	followers_count = Follow.objects.filter(following=user).count()
 
@@ -86,7 +86,6 @@ def EditProfile(request):
 			profile.first_name = form.cleaned_data.get('first_name')
 			profile.last_name = form.cleaned_data.get('last_name')
 			profile.location = form.cleaned_data.get('location')
-			profile.url = form.cleaned_data.get('url')
 			profile.profile_info = form.cleaned_data.get('profile_info')
 			profile.save()
 			return redirect('index')
@@ -110,7 +109,7 @@ def follow(request, username, option):
 			f.delete()
 			Stream.objects.filter(following=following, user=request.user).all().delete()
 		else:
-			 posts = Image.objects.all().filter(user=following)[:25]
+			 posts = Post.objects.all().filter(user=following)[:25]
 
 			 with transaction.atomic():
 			 	for post in posts:

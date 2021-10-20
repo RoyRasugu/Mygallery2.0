@@ -40,7 +40,7 @@ class Post(models.Model):
     this is a model class that gives a blueprint on how an image will be created
     '''
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    picture = models.ImageField(upload_to=user_directory_path, verbose_name='Picture', null=False)
+    picture = models.ImageField(upload_to=user_directory_path, verbose_name='Picture', null=True)
     caption  = models.TextField(max_length=1500, verbose_name='Caption')
     posted = models.DateTimeField(auto_now_add=True)
     tags = models.ManyToManyField(Tag, related_name='tags')

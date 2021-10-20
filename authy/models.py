@@ -28,7 +28,6 @@ class Profile(models.Model):
 	first_name = models.CharField(max_length=50, null=True, blank=True)
 	last_name = models.CharField(max_length=50, null=True, blank=True)
 	location = models.CharField(max_length=50, null=True, blank=True)
-	url = models.CharField(max_length=80, null=True, blank=True)
 	profile_info = models.TextField(max_length=150, null=True, blank=True)
 	created = models.DateField(auto_now_add=True)
 	favorites = models.ManyToManyField(Post)

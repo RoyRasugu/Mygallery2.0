@@ -6,7 +6,7 @@ from django.template import loader
 
 #Models:
 from comment.models import Comment
-from post.models import Image, Stream, Tag, Likes
+from post.models import Post, Stream, Tag, Likes 
 from authy.models import Profile
 
 #Forms:
@@ -27,7 +27,7 @@ def index(request):
     for post in posts:
         group_ids.append(post.post_id)
 
-    post_items = Image.objects.filter(id__in=group_ids).all().order_by('-posted')
+    post_items = Post.objects.filter(id__in=group_ids).all().order_by('-posted')
 
     template = loader.get_template('index.html')
 
@@ -39,7 +39,7 @@ def index(request):
 
 @login_required
 def PostDetails(request, post_id):
-    post = get_object_or_404(Image, id=post_id)
+    post = get_object_or_404(Post, id=post_id)
     user = request.user
     favorited = False
 
@@ -96,7 +96,7 @@ def NewPost(request):
                 t, created = Tag.objects.get_or_create(title=tag) 
                 tags_objs.append(t)
 
-            p, created = Image.objects.get_or_create(picture=picture, caption=caption, user_id=user)
+            p, created = Post.objects.get_or_create(picture=picture, caption=caption, user_id=user)
             p.tags.set(tags_objs)
             p.save()
             return redirect('index')
@@ -113,7 +113,7 @@ def NewPost(request):
 @login_required
 def tags(request, tag_slug):
     tag = get_object_or_404(Tag, slug=tag_slug)
-    posts = Image.objects.filter(tags=tag).order_by('-posted')
+    posts = Post.objects.filter(tags=tag).order_by('-posted')
 
     template = loader.get_template('tag.html')
 
@@ -127,7 +127,7 @@ def tags(request, tag_slug):
 @login_required
 def like(request, post_id):
     user = request.user
-    post = Image.objects.get(id=post_id)
+    post = Post.objects.get(id=post_id)
     current_likes = post.likes
 
     liked = Likes.objects.filter(user=user, post=post).count()
@@ -149,7 +149,7 @@ def like(request, post_id):
 @login_required
 def favorite(request, post_id):
     user = request.user
-    post = Image.objects.get(id=post_id)
+    post = Post.objects.get(id=post_id)
     profile = Profile.objects.get(user=user)
 
     if profile.favorites.filter(id=post_id).exists():
