@@ -59,20 +59,10 @@
           <strong>New Post</strong>
         </a>
 
-        <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link">
-            Settings
-          </a>
-
-          <div class="navbar-dropdown">
-            <a class="navbar-item">
-              Contact
-            </a>
-            <hr class="navbar-divider">
-            <a href="{% url 'logout' %}" class="navbar-item">
-              Log out
-            </a>
-          </div>
+        <a href="{% url 'logout' %}" class="navbar-item">
+          Logout
+        </a>
+        
         </div>
       </div>
 
