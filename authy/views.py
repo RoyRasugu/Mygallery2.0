@@ -1,13 +1,11 @@
-
-from django import template
 from django.http.response import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.template import loader
 from django.urls.base import reverse
-from authy.forms import SignupForm, ChangePasswordForm, EditProfileForm
+from authy.forms import SignupForm, EditProfileForm
 from django.contrib.auth.models import User
 
-from post.models import Follow, Post, Stream
+from post.models import Follow, Image, Stream
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
@@ -25,12 +23,12 @@ def UserProfile(request,username):
 	url_name = resolve(request.path).url_name
 
 	if url_name == 'profile':
-		posts = Post.objects.filter(user=user).order_by('-posted')
+		posts = Image.objects.filter(user=user).order_by('-posted')
 	else:
 		posts = profile.favorites.all()
 
 	#Profile info stats
-	posts_count = Post.objects.filter(user=user).count()
+	posts_count = Image.objects.filter(user=user).count()
 	following_count = Follow.objects.filter(follower=user).count()
 	followers_count = Follow.objects.filter(following=user).count()
 
@@ -76,30 +74,6 @@ def Signup(request):
 
 
 @login_required
-def PasswordChange(request):
-	user = request.user
-	if request.method == 'POST':
-		form = ChangePasswordForm(request.POST)
-		if form.is_valid():
-			new_password = form.cleaned_data.get('new_password')
-			user.set_password(new_password)
-			user.save()
-			update_session_auth_hash(request, user)
-			return redirect('change_password_done')
-	else:
-		form = ChangePasswordForm(instance=user)
-
-	context = {
-		'form':form,
-	}
-
-	return render(request, 'change_password.html', context)
-
-def PasswordChangeDone(request):
-	return render(request, 'change_password_done.html')
-
-
-@login_required
 def EditProfile(request):
 	user = request.user.id
 	profile = Profile.objects.get(user__id=user)
@@ -136,7 +110,7 @@ def follow(request, username, option):
 			f.delete()
 			Stream.objects.filter(following=following, user=request.user).all().delete()
 		else:
-			 posts = Post.objects.all().filter(user=following)[:25]
+			 posts = Image.objects.all().filter(user=following)[:25]
 
 			 with transaction.atomic():
 			 	for post in posts:
