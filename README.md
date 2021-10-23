@@ -5,6 +5,74 @@ Roy Rasugu
 ## Description
 This is an instagram clone web application that allows us to post pictures, like other people's pictures, follow people and so on.
 
+## Screenshot
+<img src="https://github.com/RoyRasugu/Mygallery2.0/raw/master/instagram_clone/static/img/Edit_profile.jpg">
+<br>
+<br>
+<img src="https://github.com/RoyRasugu/Mygallery2.0/raw/master/instagram_clone/static/img/After_edit_profile.jpg">
+displays first name,last name and bio.
+<br>
+<br>
+<img src="https://github.com/RoyRasugu/Mygallery2.0/raw/master/instagram_clone/static/img/follow.jpg">
+when you click on username of user it takes you to profile where you can follow them if you have not.
+<br>
+<br>
+<img src="https://github.com/RoyRasugu/Mygallery2.0/raw/master/instagram_clone/static/img/unfollow.jpg">
+After you follow user the follow button changes from follow to unfollow.
+<br>
+<br>
+<img src="https://github.com/RoyRasugu/Mygallery2.0/raw/master/instagram_clone/static/img/home_post.jpg">
+After you follow a user you can see their posts on the home page.
+<br>
+<br>
+<img src="https://github.com/RoyRasugu/Mygallery2.0/raw/master/instagram_clone/static/img/post_details.jpg">
+When you like the image on the homepage or click on the image, it takes you to the post details page where can comment on the post, like or unlike and save or remove the post.
+<br>
+<br>
+<img src="https://github.com/RoyRasugu/Mygallery2.0/raw/master/instagram_clone/static/img/save_post.jpg">
+This is the save post button
+<br>
+<br>
+<img src="https://github.com/RoyRasugu/Mygallery2.0/raw/master/instagram_clone/static/img/remove_post.jpg">
+After you have saved the post the icon changes to remove post.
+<br>
+<br>
+<img src="https://github.com/RoyRasugu/Mygallery2.0/raw/master/instagram_clone/static/img/saved_post.jpg">
+The saved post will be displayed on you're profile with on the saved post tab.
+<br>
+<br>
+<img src="https://github.com/RoyRasugu/Mygallery2.0/raw/master/instagram_clone/static/img/search_for_user.jpg">
+When you click the inbox link where you can reply to message in the middle or write a new message
+<br>
+<br>
+<img src="https://github.com/RoyRasugu/Mygallery2.0/raw/master/instagram_clone/static/img/search_user.jpg">
+when you click the new message button, it directs you here to search for a user
+<br>
+<br>
+<img src="https://github.com/RoyRasugu/Mygallery2.0/raw/master/instagram_clone/static/img/send_message.jpg">
+When you click the send message it will send an automatic message "Says hello!" as shown below
+<br>
+<br>
+<img src="https://github.com/RoyRasugu/Mygallery2.0/raw/master/instagram_clone/static/img/message.jpg">
+<br>
+<br>
+<img src="https://github.com/RoyRasugu/Mygallery2.0/raw/master/instagram_clone/static/img/notification.jpg">
+When you click the notifications when there are notfications it should display like this.
+<br>
+<br>
+<img src="https://github.com/RoyRasugu/Mygallery2.0/raw/master/instagram_clone/static/img/view_tag.jpg">
+This is the tag.
+<br>
+<br>
+<img src="https://github.com/RoyRasugu/Mygallery2.0/raw/master/instagram_clone/static/img/tag.jpg">
+The tag page with all images related to the tag.
+<br>
+<br>
+<img src="https://github.com/RoyRasugu/Mygallery2.0/raw/master/instagram_clone/static/img/Follow_function.jpg">
+The follow function does not work well so one has to type the username on the url eg eg https://theinstaclone.herokuapp.com/Roy.
+<br>
+<br>
+
 ## Livepage
 [livelink](https://theinstaclone.herokuapp.com/)
 
@@ -53,6 +121,10 @@ curl https://bootstrap.pypa.io/get-pip.py | python
 18. On the navbar there is the ```Notifications``` link which will light up just similarly like the ```inbox``` with the number of notifications. Then on clicking it, the number of notifications disappear. Then starting from the most recent notification to the latest they will be displayed. It will show the user who has liked you're post showing you their profile picture, the image they image they liked and how long ago they liked it. Then if a user follows you, one will see their names, profile picture and how long ago they followed you.
 19. For a user to be able to follow another user, they need to go to the other user's profile where instead of seeing the ```edit profile``` they will se instead a ```follow``` button where if the click on it, the user will now be following the other user and the button changes to ```unfollow``` and vice versa.
 20. Then there is the ```logout``` link which logs out a user.
+
+## Known Bugs
+* As a new user logs in, there are no images displayed as one has to follow a user to see their posts.
+* Some profile picture images if are not proportional cannot fit in the rounded placeholder well.
 
 ## Contact Information
 
