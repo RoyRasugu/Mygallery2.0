@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 import uuid
+from cloudinary.models import CloudinaryField
 
 from django.db.models.signals import post_save, post_delete
 from django.utils.text import slugify
@@ -40,7 +41,7 @@ class Post(models.Model):
     this is a model class that gives a blueprint on how an image will be created
     '''
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    picture = models.ImageField(upload_to=user_directory_path, verbose_name='Picture', null=True)
+    picture = CloudinaryField(upload_to=user_directory_path, verbose_name='Picture', null=True)
     caption  = models.TextField(max_length=1500, verbose_name='Caption')
     posted = models.DateTimeField(auto_now_add=True)
     tags = models.ManyToManyField(Tag, related_name='tags')
@@ -112,6 +113,7 @@ class Likes(models.Model):
 
         notify = Notification.objects.filter(post=post, sender=sender, notification_type=1)
         notify.delete()
+
 
 #Stream
 post_save.connect(Stream.add_post, sender=Post)
