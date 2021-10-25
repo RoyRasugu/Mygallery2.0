@@ -32,7 +32,7 @@ class Profile(models.Model):
 	profile_info = models.TextField(max_length=150, null=True, blank=True)
 	created = models.DateField(auto_now_add=True)
 	favorites = models.ManyToManyField(Post)
-	picture = CloudinaryField('photo')
+	pic = CloudinaryField('photo', null=True)
 
 	def save(self, *args, **kwargs):
 		super().save(*args, **kwargs)
