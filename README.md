@@ -74,7 +74,7 @@ The follow function does not work well so one has to type the username on the ur
 <br>
 
 ## Livepage
-[livelink](https://theinstaclone.herokuapp.com/)
+[livelink](https://instaart.herokuapp.com/
 
 ## Setup Requirements
 * Django
