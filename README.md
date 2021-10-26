@@ -68,8 +68,8 @@ This is the tag.
 The tag page with all images related to the tag.
 <br>
 <br>
-<img src="https://github.com/RoyRasugu/Mygallery2.0/raw/master/instagram_clone/static/img/Follow_function.jpg">
-The follow function does not work well so one has to type the username on the url eg eg https://theinstaclone.herokuapp.com/Roy.
+<img src="https://github.com/RoyRasugu/Mygallery2.0/raw/master/instagram_clone/static/img/new_follow_function.jpg">
+The view profile allows us to view one's profile where we can follow them.
 <br>
 <br>
 
@@ -121,10 +121,6 @@ curl https://bootstrap.pypa.io/get-pip.py | python
 18. On the navbar there is the ```Notifications``` link which will light up just similarly like the ```inbox``` with the number of notifications. Then on clicking it, the number of notifications disappear. Then starting from the most recent notification to the latest they will be displayed. It will show the user who has liked you're post showing you their profile picture, the image they image they liked and how long ago they liked it. Then if a user follows you, one will see their names, profile picture and how long ago they followed you.
 19. For a user to be able to follow another user, they need to go to the other user's profile where instead of seeing the ```edit profile``` they will se instead a ```follow``` button where if the click on it, the user will now be following the other user and the button changes to ```unfollow``` and vice versa.
 20. Then there is the ```logout``` link which logs out a user.
-
-## Known Bugs
-* As a new user logs in, there are no images displayed as one has to follow a user to see their posts.
-* Some profile picture images if are not proportional cannot fit in the rounded placeholder well.
 
 ## Contact Information
 
