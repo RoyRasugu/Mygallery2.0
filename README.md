@@ -46,7 +46,7 @@ When you click the inbox link where you can reply to message in the middle or wr
 <br>
 <br>
 <img src="https://github.com/RoyRasugu/Mygallery2.0/raw/master/instagram_clone/static/img/search_user.jpg">
-when you click the new message button, it directs you here to search for a user
+when you click the new message button, it directs you here to search for a user where you search for a user by their username
 <br>
 <br>
 <img src="https://github.com/RoyRasugu/Mygallery2.0/raw/master/instagram_clone/static/img/send_message.jpg">
@@ -57,7 +57,7 @@ When you click the send message it will send an automatic message "Says hello!" 
 <br>
 <br>
 <img src="https://github.com/RoyRasugu/Mygallery2.0/raw/master/instagram_clone/static/img/notification.jpg">
-When you click the notifications when there are notfications it should display like this.
+When you click the notifications when there are notifications it should display like this.
 <br>
 <br>
 <img src="https://github.com/RoyRasugu/Mygallery2.0/raw/master/instagram_clone/static/img/view_tag.jpg">
