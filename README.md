@@ -122,6 +122,9 @@ curl https://bootstrap.pypa.io/get-pip.py | python
 19. For a user to be able to follow another user, they need to go to the other user's profile where instead of seeing the ```edit profile``` they will se instead a ```follow``` button where if the click on it, the user will now be following the other user and the button changes to ```unfollow``` and vice versa.
 20. Then there is the ```logout``` link which logs out a user.
 
+## Known Bugs
+* The images may or may not appear as my application is not working well with cloudinary.
+
 ## Contact Information
 
 You can reach me on my email [royratchizi@gmail.com]
